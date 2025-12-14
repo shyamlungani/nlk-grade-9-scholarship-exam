@@ -1,1 +1,1 @@
-Do all th quetions carefully
+Do all th questions carefully
