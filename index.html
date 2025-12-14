@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GRADE 9 SCHOLARSHIP EXAMINATION, 2026 – NLK Academy</title>
+  <style>
+    :root{
+      --brand:#2b6cff;
+      --brand-dark:#1f4fd6;
+      --accent:#22c55e;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    /* Hero */
+    .hero{
+      position:relative;
+      background: radial-gradient(1000px 400px at 10% -20%, #9ec5ff 0%, transparent 60%),
+                  radial-gradient(1000px 400px at 90% -20%, #b6f0d2 0%, transparent 60%),
+                  linear-gradient(135deg, #eaf1ff 0%, #f8fffb 100%);
+      padding: 28px 24px 32px;
+      border-bottom:1px solid #e5e7eb;
+    }
+    .container{max-width:1000px;margin:0 auto;padding:0 8px;}
+    .brand-row{display:flex;align-items:center;gap:18px;}
+    .brand-row img{height:64px;width:auto;object-fit:contain;}
+    .school-meta{font-size:.95rem;color:var(--muted);}
+    .title{margin:10px 0 0;font-size:1.6rem;line-height:1.2;color:var(--brand-dark);}
+    .subtitle{margin:6px 0 0;font-size:1rem;color:#0f172a;font-weight:700;letter-spacing:.02em;}
+
+    /* Card */
+    main{max-width:1000px;margin:24px auto;padding:0 12px;}
+    .card{
+      position:relative;
+      background:var(--card);
+      border-radius:16px;
+      box-shadow:0 12px 40px rgba(31,79,214,.12);
+      border:1px solid #e5e7eb;
+      overflow:hidden;
+    }
+    .card-header{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:16px 20px;background:linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+      border-bottom:1px solid #eef2ff;
+    }
+    .badge{display:inline-flex;align-items:center;gap:8px;background:#eef2ff;color:#1f4fd6;border:1px solid #dbe3ff;padding:8px 12px;border-radius:999px;font-weight:700}
+    .timer{font-weight:700;color:#b91c1c}
+    .content{padding:20px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    label{font-weight:600;color:#334155}
+    input[type=text],input[type=email]{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px}
+    .question{border-top:1px dashed #e5e7eb;margin-top:16px;padding-top:16px}
+    .options label{font-weight:500;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:8px 0;display:block;cursor:pointer}
+    .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    button{padding:12px 16px;border:none;border-radius:10px;cursor:pointer;font-weight:700}
+    .primary{background:var(--brand);color:white}
+    .secondary{background:#eef2ff;color:#1f4fd6;border:1px solid #dbe3ff}
+    .note{color:var(--muted);font-size:.9rem}
+    .footer{margin:18px 0 0;padding:14px;background:#f0f7ff;border-top:1px solid #e5e7eb;color:#334155;border-bottom-left-radius:16px;border-bottom-right-radius:16px}
+  </style>
+</head>
+<body>
+  <!-- HERO with logo and heading -->
+  <section class="hero">
+    <div class="container">
+      <div class="brand-row">
+        <img src="NLK-Academy-logo.png" alt="NLK Academy Logo" />
+        <div>
+          <div class="subtitle">NLK ACADEMY • AFFILIATED TO CBSE</div>
+          <h1 class="title">GRADE 9 SCHOLARSHIP EXAMINATION, 2026</h1>
+          <div class="school-meta">Kanpur, Uttar Pradesh • Online Objective Exam (Demo)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beautiful exam card -->
+  <main>
+    <div class="card">
+      <div class="card-header">
+        <div class="badge">📝 Exam • Max Marks: <strong id="maxMarks">10</strong></div>
+        <div>⏱️ Time Remaining: <span class="timer" id="timer">--:--:--</span></div>
+      </div>
+      <div class="content">
+        <!-- Student Info -->
+        <h2 style="margin-top:0">Student Details</h2>
+        <div class="grid">
+          <div>
+            <label>Full Name</label>
+            <input type="text" id="studentName" placeholder="Enter your full name" required />
+          </div>
+          <div>
+            <label>Roll Number</label>
+            <input type="text" id="rollNumber" placeholder="Enter roll number" required />
+          </div>
+          <div>
+            <label>Email (optional)</label>
+            <input type="email" id="email" placeholder="Enter email" />
+          </div>
+          <div>
+            <label>Class/Section</label>
+            <input type="text" id="section" placeholder="9-A / 9-B, etc." />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="startBtn">Start Exam</button>
+          <button class="secondary" id="resetBtn">Reset</button>
+        </div>
+        <p class="note">Questions & options are shuffled automatically. Do not refresh the page during the exam.</p>
+
+        <!-- Progress -->
+        <div class="grid" style="margin-top:14px">
+          <div class="badge" style="justify-self:start">Progress: <span id="progress" style="margin-left:6px;font-weight:800">0 answered</span></div>
+          <div style="justify-self:end" class="badge">Scholarship • Demo</div>
+        </div>
+
+        <!-- Questions -->
+        <div id="quizContainer" class="question"></div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="primary" id="submitBtn">Submit Exam</button>
+          <button class="secondary" id="downloadCsvBtn">Download Result (CSV)</button>
+        </div>
+      </div>
+      <div class="footer">
+        For queries: examcell@nlkacademy.edu • © 2026 NLK Academy
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const EXAM_DURATION_MIN = 15; // minutes
+    const TOTAL_MARKS = 10;       // total exam marks
+    const NEGATIVE_MARKING = 0;   // set to 0.25 for -0.25 per wrong
+    const SHUFFLE_QUESTIONS = true;
+    const SHUFFLE_OPTIONS = true;
+
+    const QUESTION_BANK = [
+      { id: 'M1', type: 'mcq', text: 'Simplify: 5 + 7 × 2', options: ['24', '19', '26', '17'], answer: 1, marks: 1 },
+      { id: 'M2', type: 'mcq', text: 'Value of (a+b)^2 is', options: ['a^2 + b^2', 'a^2 - 2ab + b^2', 'a^2 + 2ab + b^2', '2a^2 + b^2'], answer: 2, marks: 1 },
+      { id: 'S1', type: 'mcq', text: 'Photosynthesis occurs in', options: ['Mitochondria', 'Chloroplast', 'Nucleus', 'Vacuole'], answer: 1, marks: 1 },
+      { id: 'S2', type: 'tf',  text: 'Sound cannot travel through vacuum.', answer: true, marks: 1 },
+      { id: 'SS1', type: 'mcq', text: 'The longest river in the world is', options: ['Nile', 'Amazon', 'Yangtze', 'Ganga'], answer: 0, marks: 1 },
+      { id: 'E1', type: 'mcq', text: 'Choose the correctly spelled word', options: ['Definately', 'Definitely', 'Definetly', 'Definitley'], answer: 1, marks: 1 },
+      { id: 'E2', type: 'mcq', text: 'Pick the correct passive voice: "She writes a letter."', options: ['A letter is written by her.', 'A letter was written by she.', 'A letter wrote by her.', 'A letter is write by her.'], answer: 0, marks: 1 },
+      { id: 'M3', type: 'mcq', text: 'The value of 1/2 of 36 is', options: ['16', '18', '20', '12'], answer: 1, marks: 1 },
+      { id: 'S3', type: 'mcq', text: 'Unit of electric current is', options: ['Volt', 'Watt', 'Ampere', 'Ohm'], answer: 2, marks: 1 },
+      { id: 'GK1', type: 'tf',  text: 'The Earth revolves around the Sun.', answer: true, marks: 1 },
+    ];
+
+    function shuffleArray(arr) { const a = arr.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+    function formatTime(ms){ const t=Math.max(0,Math.floor(ms/1000)); const h=Math.floor(t/3600); const m=Math.floor((t%3600)/60); const s=t%60; const pad=n=>String(n).padStart(2,'0'); return `${pad(h)}:${pad(m)}:${pad(s)}`; }
+
+    let questions=[]; let selections={}; let startTime=null; let endTime=null; let timerInterval=null;
+    const quizContainer=document.getElementById('quizContainer');
+    const timerEl=document.getElementById('timer');
+    const progressEl=document.getElementById('progress');
+    const startBtn=document.getElementById('startBtn');
+    const submitBtn=document.getElementById('submitBtn');
+    const resetBtn=document.getElementById('resetBtn');
+    const downloadCsvBtn=document.getElementById('downloadCsvBtn');
+    document.getElementById('maxMarks').textContent=TOTAL_MARKS;
+
+    function renderQuiz(){
+      quizContainer.innerHTML='';
+      const wrapper=document.createElement('div');
+      questions.forEach((q,idx)=>{
+        const qDiv=document.createElement('div'); qDiv.className='question';
+        const title=document.createElement('h3'); title.textContent=`${idx+1}. ${q.text} (${q.marks} mark)`; qDiv.appendChild(title);
+        const opts=document.createElement('div'); opts.className='options';
+        if(q.type==='mcq'){
+          const idxs=q.options.map((_,i)=>i); const order=SHUFFLE_OPTIONS?shuffleArray(idxs):idxs;
+          order.forEach(optIndex=>{
+            const label=document.createElement('label');
+            const input=document.createElement('input'); input.type='radio'; input.name=q.id; input.value=optIndex;
+            input.addEventListener('change',()=>{ selections[q.id]=parseInt(input.value,10); updateProgress(); });
+            label.appendChild(input); label.appendChild(document.createTextNode(' '+q.options[optIndex]));
+            opts.appendChild(label);
+          });
+        } else if (q.type==='tf'){
+          [['True',true],['False',false]].forEach(([txt,val])=>{
+            const label=document.createElement('label');
+            const input=document.createElement('input'); input.type='radio'; input.name=q.id; input.value=val;
+            input.addEventListener('change',()=>{ selections[q.id]= (input.value==='true'); updateProgress(); });
+            label.appendChild(input); label.appendChild(document.createTextNode(' '+txt));
+            opts.appendChild(label);
+          });
+        }
+        qDiv.appendChild(opts); wrapper.appendChild(qDiv);
+      });
+      quizContainer.appendChild(wrapper); updateProgress();
+    }
+
+    function updateProgress(){ const answered=Object.keys(selections).length; const total=questions.length; progressEl.textContent=`${answered} answered / ${total} total`; }
+
+    function startTimer(){ startTime=Date.now(); endTime=startTime + EXAM_DURATION_MIN*60*1000; timerInterval=setInterval(()=>{ const remaining=endTime - Date.now(); timerEl.textContent=formatTime(remaining); if(remaining<=0){ clearInterval(timerInterval); timerEl.textContent='00:00:00'; autoSubmit(); } },500); }
+
+    function grade(){ let total=0, correct=0, wrong=0; questions.forEach(q=>{ const ans=selections[q.id]; if(ans===undefined) return; let isCorrect=false; if(q.type==='mcq'){ isCorrect = (ans===q.answer); } else { isCorrect = (ans===q.answer); } if(isCorrect){ total+=q.marks; correct++; } else { total -= (NEGATIVE_MARKING*q.marks); wrong++; } }); const maxPossible=questions.reduce((s,q)=>s+q.marks,0); const scaled=Math.round((total/maxPossible)*TOTAL_MARKS*100)/100; return { raw:Math.round(total*100)/100, scaled, correct, wrong, maxPossible }; }
+
+    function showResult(){
+      const name=document.getElementById('studentName').value.trim();
+      const roll=document.getElementById('rollNumber').value.trim();
+      const email=document.getElementById('email').value.trim();
+      const section=document.getElementById('section').value.trim();
+      const g=grade(); const used=Math.max(0, Date.now()-startTime);
+      window.__lastResult = { timestamp:new Date().toISOString(), name, roll, email, section, score_scaled:g.scaled, score_raw:g.raw, correct:g.correct, wrong:g.wrong, max_possible:g.maxPossible, duration_ms:used };
+    }
+
+    function autoSubmit(){ alert('Time is up! Submitting automatically.'); submitExam(); }
+    function submitExam(){ clearInterval(timerInterval); showResult(); document.querySelectorAll('input[type="radio"]').forEach(el=>el.disabled=true); submitBtn.disabled=true; alert('Your responses have been submitted successfully.'); }
+
+    function startExam(){ const name=document.getElementById('studentName').value.trim(); const roll=document.getElementById('rollNumber').value.trim(); if(!name || !roll){ alert('Please enter your Name and Roll Number to start the exam.'); return; } questions = SHUFFLE_QUESTIONS ? shuffleArray(QUESTION_BANK) : QUESTION_BANK.slice(); renderQuiz(); startTimer(); startBtn.disabled=true; }
+    function resetExam(){ if(!confirm('Clear all selections?')) return; selections={}; renderQuiz(); submitBtn.disabled=false; document.querySelectorAll('input[type="radio"]').forEach(el=>el.disabled=false); }
+
+    function downloadCSV(){ const r=window.__lastResult; if(!r){ alert('No result to download yet. Submit the exam first.'); return; } const headers=Object.keys(r); const values=headers.map(h=> String(r[h]).replace(/"/g,'""')); const csv=[ headers.join(','), values.map(v=>`"${v}"`).join(',') ].join('\n'); const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`result_${r.roll||'unknown'}.csv`; a.click(); URL.revokeObjectURL(url); }
+
+    startBtn.addEventListener('click', startExam);
+    submitBtn.addEventListener('click', submitExam);
+    resetBtn.addEventListener('click', resetExam);
+    downloadCsvBtn.addEventListener('click', downloadCSV);
+  </script>
+</body>
+</html>
